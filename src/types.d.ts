@@ -412,25 +412,6 @@ export interface Projects extends Omit<Headline, 'classes'>, Widget {
   callToAction?: CallToAction;
 }
 
-export interface QuickStartCommand {
-  command: string;
-  /** Shown above the command as a `# comment`. */
-  comment?: string;
-}
-
-export interface QuickStart extends Omit<Headline, 'classes'>, Widget {
-  /** One or more shell commands, rendered in a terminal-like block with a copy button. */
-  commands?: Array<string | QuickStartCommand>;
-  /** Prompt character shown before each command (`$` by default). */
-  prompt?: string;
-  copyLabel?: string;
-  copiedLabel?: string;
-  /** Two or three facts to read before running the command. */
-  items?: Array<Item>;
-  actions?: Array<CallToAction>;
-  note?: string;
-}
-
 export interface Countdown extends Omit<Headline, 'classes'>, Widget {
   /** Target date/time in ISO 8601, e.g. "2026-10-15T09:00:00Z". */
   date?: string;

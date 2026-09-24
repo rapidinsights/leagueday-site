@@ -33,15 +33,15 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
-  // Native Fonts API: self-hosts + subsets + preloads Inter and generates
+  // Native Fonts API: self-hosts + subsets + preloads Schibsted Grotesk and generates
   // metric-adjusted fallbacks. Injected via <Font /> in Layout.astro and
-  // consumed through the `--font-inter` CSS variable in CustomStyles.astro.
+  // consumed through the `--font-schibsted` CSS variable in CustomStyles.astro.
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: 'Inter',
-      cssVariable: '--font-inter',
-      weights: ['100 900'],
+      name: 'Schibsted Grotesk',
+      cssVariable: '--font-schibsted',
+      weights: ['400 800'],
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['sans-serif'],

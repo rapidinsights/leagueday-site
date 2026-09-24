@@ -1,7 +1,7 @@
 {
   "name": "leagueday-site",
   "version": "1.0.0-beta.66",
-  "description": "AstroWind: A free template using Astro 7 and Tailwind CSS v4. Astro starter theme.",
+  "description": "Marketing site for LeagueDay, golf league management for public courses.",
   "type": "module",
   "private": true,
   "engines": {

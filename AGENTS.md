@@ -1,8 +1,10 @@
-# AstroWind Agent Instructions
+# LeagueDay Site Agent Instructions
 
 ## Project Overview
 
-AstroWind is a free, open-source website template built with **Astro v7** and **Tailwind CSS v4**. It generates a fully static site optimized for performance, SEO, and accessibility.
+Marketing site for LeagueDay (golf league management for public courses), built on the AstroWind template with **Astro v7** and **Tailwind CSS v4**. Fully static, deployed on **Netlify** (`netlify.toml`), managed with **pnpm**. The blog and dark mode are off.
+
+Colors and type come from the LeagueDay app's design system (Linen · Stone · Bottle, Schibsted Grotesk). Its source of truth is `web/app/globals.css` in the leagueday repo; `src/components/CustomStyles.astro` copies the values.
 
 **Stack:** Astro v7 | Tailwind CSS v4 | TypeScript 5.9 | MDX | Sharp
 
@@ -12,13 +14,13 @@ Before implementing a project-specific task (disabling the blog, Open Graph imag
 
 ## Quick Reference
 
-| Command           | Purpose                             |
-| ----------------- | ----------------------------------- |
-| `npm run dev`     | Start dev server at localhost:4321  |
-| `npm run build`   | Production build to `./dist/`       |
-| `npm run preview` | Preview production build locally    |
-| `npm run check`   | Run astro check + ESLint + Prettier |
-| `npm run fix`     | Auto-fix ESLint + Prettier issues   |
+| Command        | Purpose                             |
+| -------------- | ----------------------------------- |
+| `pnpm dev`     | Start dev server at localhost:4321  |
+| `pnpm build`   | Production build to `./dist/`       |
+| `pnpm preview` | Preview production build locally    |
+| `pnpm check`   | Run astro check + ESLint + Prettier |
+| `pnpm fix`     | Auto-fix ESLint + Prettier issues   |
 
 **Node.js requirement:** >= 22.22.3
 
@@ -117,7 +119,7 @@ Astro's native CSP is intentionally **not** enabled in this version: it is incom
 
 After changes, always verify:
 
-1. `npm run build` succeeds
-2. `npm run check` passes (astro check + ESLint + Prettier)
-3. Visual check in browser: homepage, blog, dark mode, mobile menu
+1. `pnpm build` succeeds
+2. `pnpm check` passes (astro check + ESLint + Prettier)
+3. Visual check in browser: homepage, contact page, mobile menu
 4. Structured data describes the site it is on: the `WebSite` / `Organization` block in `src/pages/index.astro` is built only from `config.yaml`; anything you add there must be true for your site
