@@ -25,3 +25,13 @@ pnpm-debug.log*
 
 
 .astro
+# internal, local only: kept out of the public repo
+docs/
+CLAUDE.md
+AGENTS.md
+TODOS.md
+DESIGN.md
+.agents/
+.claude/
+.mcp.json
+.playwright-mcp/
