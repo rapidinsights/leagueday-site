@@ -1,0 +1,6 @@
+# Expose Astro dependencies for the flat node_modules Astro expects.
+shamefullyHoist: true
+# pnpm 11 blocks install scripts unless allowlisted; these two need their native binaries.
+allowBuilds:
+  esbuild: true
+  sharp: true
