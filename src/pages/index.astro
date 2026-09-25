@@ -1,9 +1,9 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import Steps from '~/components/widgets/Steps.astro';
+import HeroProduct from '~/components/widgets/HeroProduct.astro';
+import TwoSides from '~/components/widgets/TwoSides.astro';
+import StepsSticky from '~/components/widgets/StepsSticky.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import StructuredData from '~/components/common/StructuredData.astro';
 import { SITE, METADATA, I18N } from 'astrowind:config';
@@ -11,7 +11,7 @@ import favIconSvg from '~/assets/favicons/favicon.svg';
 
 // First-draft working copy drawn from the PRD. The copy pass replaces it.
 const metadata = {
-  title: 'LeagueDay | Golf league management for public courses',
+  title: 'LeagueDay | The easiest way to run your golf leagues',
   ignoreTitleTemplate: true,
 };
 
@@ -41,115 +41,90 @@ const structuredData = [
 <Layout metadata={metadata}>
   <StructuredData slot="head" schema={structuredData} />
 
-  <Hero
+  <HeroProduct
     tagline="Golf league management for public courses"
     actions={[
       { variant: 'primary', text: 'Book a demo', href: '/contact' },
       { text: 'How it works', href: '#how-it-works' },
     ]}
   >
-    <Fragment slot="title">Every league tee sheet, full and on time.</Fragment>
-
+    <Fragment slot="title">The easiest way to run your golf leagues</Fragment>
     <Fragment slot="subtitle">
-      LeagueDay replaces the league sign-up spreadsheet. Golfers book their own tee times from a phone, your staff sees
-      every league at a glance, and no-shows get caught before the tee instead of at it.
+      Golfers book their own tee times from a phone. Your staff sees every league on one sheet.
     </Fragment>
-  </Hero>
+  </HeroProduct>
 
-  <Features
-    id="courses"
-    tagline="For courses"
-    title="Run every league from one place"
-    subtitle="Built for course owners and pro shop staff who run several leagues a week."
-    columns={2}
-    items={[
-      {
-        title: 'One tee sheet per league day',
-        description:
-          'See every slot, who holds it and what is still open. Book, move or cancel for a golfer who calls the pro shop.',
-        icon: 'tabler:calendar-event',
-      },
-      {
-        title: 'Rosters that stay current',
-        description: 'Add, move and archive golfers across leagues without rebuilding a sheet each season.',
-        icon: 'tabler:users',
-      },
-      {
-        title: 'Deadlines that enforce themselves',
-        description:
-          'Tee times open on a set schedule and late cancellations are blocked automatically, so the sheet stays stable.',
-        icon: 'tabler:clock-check',
-      },
-      {
-        title: 'No-shows and scores on record',
-        description: 'Track who showed up and what they shot, with a history your staff can look back on.',
-        icon: 'tabler:clipboard-check',
-      },
-    ]}
+  <TwoSides
+    title="The same tee sheet, from both sides"
+    classes={{ container: 'pt-24 md:pt-40 lg:pt-40' }}
+    left={{
+      id: 'courses',
+      title: 'For the pro shop',
+      subtitle: 'For owners and staff running several leagues a week.',
+      items: [
+        {
+          title: 'One tee sheet per league day',
+          description: 'See every slot and who holds it. Book, move or cancel for a golfer who calls in.',
+        },
+        {
+          title: 'Rosters that stay current',
+          description: 'Add, move and archive golfers without rebuilding a sheet each season.',
+        },
+        {
+          title: 'Deadlines that enforce themselves',
+          description: 'Tee times open on schedule and late cancellations are blocked automatically.',
+        },
+        {
+          title: 'No-shows and scores on record',
+          description: 'Who showed up and what they shot, with a history your staff can look back on.',
+        },
+      ],
+    }}
+    right={{
+      id: 'golfers',
+      title: 'For golfers',
+      subtitle: 'Made for league golfers in their 70s and 80s.',
+      items: [
+        { title: 'Three taps to book', description: 'Open the link from the text, tap an open slot, tap Book.' },
+        { title: 'Large text, big buttons', description: 'Readable without glasses, on a phone or an iPad.' },
+        { title: 'Nothing to install', description: 'No app to download and no password to remember.' },
+        { title: 'See who is playing', description: 'The sheet updates live, so everyone sees the same open slots.' },
+      ],
+    }}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-white"></div>
+      <div class="absolute inset-0 bg-white/60 border-t border-border"></div>
     </Fragment>
-  </Features>
+  </TwoSides>
 
-  <Features
-    id="golfers"
-    tagline="For golfers"
-    title="Booking a tee time takes three taps"
-    subtitle="Made for league golfers in their 70s and 80s. Nothing to install and no password to remember."
-    columns={3}
-    items={[
-      {
-        title: 'Large text, big buttons',
-        description: 'Readable without glasses and easy to tap, on a phone or an iPad.',
-        icon: 'tabler:text-size',
-      },
-      {
-        title: 'Remembers who you are',
-        description: 'Your league and name are saved after the first booking. After that it is tap the slot, tap Book.',
-        icon: 'tabler:user-check',
-      },
-      {
-        title: 'See who is playing',
-        description: 'The sheet updates live, so everyone sees the same open slots at the same time.',
-        icon: 'tabler:eye',
-      },
-    ]}
-  />
-
-  <Steps
+  <StepsSticky
     id="how-it-works"
-    tagline="How it works"
     title="A league day with LeagueDay"
     items={[
       {
         title: 'Tee times open two weeks out',
         description: 'Each league date publishes on schedule. Golfers get a link by text.',
-        icon: 'tabler:calendar-plus',
+        screenshot: 'Text message with the booking link',
       },
       {
         title: 'Golfers book their own slots',
         description: 'They pick an open time and book it. Staff can book for anyone who calls in.',
-        icon: 'tabler:hand-finger',
+        screenshot: 'Golfer booking a slot on a phone',
       },
       {
         title: 'The sheet locks before play',
         description: 'The cancellation deadline keeps the tee sheet stable in the final days.',
-        icon: 'tabler:lock',
+        screenshot: 'Locked tee sheet, staff view',
       },
       {
         title: 'Play, then post scores',
         description: 'Scores and attendance go on record for the season.',
-        icon: 'tabler:golf',
+        screenshot: 'Score and attendance entry',
       },
     ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-white"></div>
-    </Fragment>
-  </Steps>
+  />
 
-  <CallToAction actions={[{ variant: 'primary', text: 'Book a demo', href: '/contact' }]}>
+  <CallToAction layout="banner" actions={[{ variant: 'primary', text: 'Book a demo', href: '/contact' }]}>
     <Fragment slot="title">See your leagues in LeagueDay</Fragment>
     <Fragment slot="subtitle">A short walkthrough using your own league schedule.</Fragment>
   </CallToAction>

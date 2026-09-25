@@ -1,0 +1,56 @@
+---
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import type { TwoSides as Props } from '~/types';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline = await Astro.slots.render('tagline'),
+  left,
+  right,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline
+    title={title}
+    subtitle={subtitle}
+    tagline={tagline}
+    classes={{
+      container: 'max-w-none text-left md:mx-0 md:mb-10',
+      title: 'text-3xl md:text-[2.5rem]',
+      ...((classes?.headline as Record<string, string>) ?? {}),
+    }}
+  />
+
+  <div class="grid border-t border-border md:grid-cols-2">
+    {
+      [left, right].map((group, i) => (
+        <div
+          id={group.id}
+          class:list={[
+            'scroll-mt-[72px] pt-10',
+            i === 0 ? 'md:pr-12' : 'mt-10 border-t border-border md:mt-0 md:border-t-0 md:border-l md:pl-12',
+          ]}
+        >
+          <h3 class="font-heading text-2xl font-bold tracking-tight text-heading">{group.title}</h3>
+          {group.subtitle && <p class="mt-2 text-lg text-muted">{group.subtitle}</p>}
+          <ul class="mt-8 grid gap-6 list-none">
+            {group.items.map((item) => (
+              <li>
+                <strong class="block text-lg font-semibold text-heading">{item.title}</strong>
+                <span class="mt-1 block leading-relaxed text-muted">{item.description}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</WidgetWrapper>

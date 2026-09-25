@@ -1,0 +1,64 @@
+---
+import Button from '~/components/ui/Button.astro';
+import ScreenshotSlot from '~/components/ui/ScreenshotSlot.astro';
+
+import type { HeroProduct as Props } from '~/types';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  actions = [],
+  id,
+} = Astro.props;
+---
+
+<section class="relative z-[1] md:-mt-[76px] not-prose" {...id ? { id } : {}}>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
+    <div
+      class="grid gap-8 pt-10 md:pt-16 lg:grid-cols-12 lg:items-end intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    >
+      <div class="lg:col-span-8">
+        {
+          tagline && (
+            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-primary" set:html={tagline} />
+          )
+        }
+        {
+          title && (
+            <h1
+              class="font-heading font-extrabold text-heading text-4xl md:text-5xl lg:text-6xl leading-[1.02] tracking-tighter text-balance"
+              set:html={title}
+            />
+          )
+        }
+        {subtitle && <p class="mt-5 max-w-[42ch] text-xl leading-relaxed text-muted text-pretty" set:html={subtitle} />}
+      </div>
+      {
+        actions.length > 0 && (
+          <div class="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:justify-end">
+            {actions.map((action) => (
+              <Button {...action} class="w-full sm:w-auto whitespace-nowrap" />
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div
+      class="relative mt-10 md:mt-14 pb-10 md:pb-0 intersect-once intersect-no-queue intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+    >
+      <ScreenshotSlot
+        label="Staff tee sheet, desktop"
+        size="Real screenshot, 1600 x 1000, cropped at the fold"
+        class="aspect-[16/10] md:mr-44 md:rounded-b-none md:border-b-0 shadow-[0_30px_60px_color-mix(in_srgb,var(--aw-color-primary)_12%,transparent)]"
+      />
+      <ScreenshotSlot
+        label="Same slot, golfer phone"
+        size="Real screenshot, 1170 x 2532"
+        class="mx-auto mt-6 w-56 aspect-[9/19] rounded-3xl shadow-xl md:absolute md:right-8 md:-bottom-16 md:mt-0 md:w-60"
+      />
+    </div>
+  </div>
+</section>

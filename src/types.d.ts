@@ -209,6 +209,26 @@ export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' |
   image?: string | HeroImage;
 }
 
+export interface HeroProduct extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
+  actions?: CallToAction[];
+}
+
+export interface TwoSidesGroup {
+  id?: string;
+  title: string;
+  subtitle?: string;
+  items: Array<{ title: string; description: string }>;
+}
+
+export interface TwoSides extends Omit<Headline, 'classes'>, Widget {
+  left: TwoSidesGroup;
+  right: TwoSidesGroup;
+}
+
+export interface StepsSticky extends Omit<Headline, 'classes'>, Widget {
+  items: Array<{ title: string; description: string; screenshot: string }>;
+}
+
 export interface Stats extends Omit<Headline, 'classes'>, Widget {
   stats?: Array<Stat>;
   /** Animate numeric amounts from 0 when they scroll into view (off with reduced motion). */

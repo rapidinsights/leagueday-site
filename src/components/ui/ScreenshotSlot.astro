@@ -1,0 +1,26 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+// Stand-in for a product screenshot until real ones exist. Swap each slot for an <Image>.
+export interface Props {
+  label: string;
+  size?: string;
+  class?: string;
+}
+
+const { label, size, class: className = '' } = Astro.props;
+---
+
+<div
+  role="img"
+  aria-label={`Screenshot placeholder: ${label}`}
+  class={twMerge(
+    'grid place-items-center rounded-xl border-[1.5px] border-dashed border-muted/40 p-4 text-center text-sm text-muted bg-[repeating-linear-gradient(135deg,color-mix(in_srgb,var(--aw-color-text-muted)_7%,var(--aw-color-bg-page))_0_12px,color-mix(in_srgb,var(--aw-color-text-muted)_11%,var(--aw-color-bg-page))_12px_24px)]',
+    className
+  )}
+>
+  <div>
+    <span class="block font-semibold text-heading">{label}</span>
+    {size && <span class="block mt-1">{size}</span>}
+  </div>
+</div>
