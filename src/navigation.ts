@@ -1,8 +1,9 @@
 import { getPermalink } from './utils/permalinks';
 
-// Golfers never sign in (they open the link from their text), so the entry to
-// the app is labelled for course staff.
-const staffSignInUrl = 'https://app.leaguedaygolf.com/admin/login';
+// The app's front door routes everyone: a golfer whose phone it remembers goes
+// straight to their tee times, anyone else gets the gate, which offers phone
+// recovery and a staff sign-in link.
+const signInUrl = 'https://app.leaguedaygolf.com/';
 
 export const headerData = {
   links: [
@@ -11,7 +12,7 @@ export const headerData = {
     { text: 'How it works', href: getPermalink('/#how-it-works') },
   ],
   actions: [
-    { text: 'Staff sign in', href: staffSignInUrl, variant: 'link' as const },
+    { text: 'Sign in', href: signInUrl, variant: 'link' as const },
     { text: 'Book a demo', href: getPermalink('/contact') },
   ],
 };
@@ -30,7 +31,7 @@ export const footerData = {
       title: 'Company',
       links: [
         { text: 'Contact', href: getPermalink('/contact') },
-        { text: 'Staff sign in', href: staffSignInUrl },
+        { text: 'Sign in', href: signInUrl },
       ],
     },
   ],
