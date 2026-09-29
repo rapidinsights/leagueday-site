@@ -209,8 +209,14 @@ export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' |
   image?: string | HeroImage;
 }
 
+export interface Screenshot {
+  src: ImageMetadata;
+  alt: string;
+}
+
 export interface HeroProduct extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
   actions?: CallToAction[];
+  screenshots: { desktop: Screenshot; phone: Screenshot };
 }
 
 export interface TwoSidesGroup {
@@ -226,7 +232,7 @@ export interface TwoSides extends Omit<Headline, 'classes'>, Widget {
 }
 
 export interface StepsSticky extends Omit<Headline, 'classes'>, Widget {
-  items: Array<{ title: string; description: string; screenshot: string }>;
+  items: Array<{ title: string; description: string; screenshot: Screenshot }>;
 }
 
 export interface Stats extends Omit<Headline, 'classes'>, Widget {

@@ -9,6 +9,13 @@ import StructuredData from '~/components/common/StructuredData.astro';
 import { SITE, METADATA, I18N } from 'astrowind:config';
 import favIconSvg from '~/assets/favicons/favicon.svg';
 
+import heroTeeSheet from '~/assets/images/app/hero-tee-sheet.png';
+import heroPhone from '~/assets/images/app/hero-phone.png';
+import stepText from '~/assets/images/app/step-1-text.png';
+import stepBook from '~/assets/images/app/step-2-book.png';
+import stepLocked from '~/assets/images/app/step-3-locked.png';
+import stepScores from '~/assets/images/app/step-4-scores.png';
+
 // First-draft working copy drawn from the PRD. The copy pass replaces it.
 const metadata = {
   title: 'LeagueDay | The easiest way to run your golf leagues',
@@ -47,6 +54,16 @@ const structuredData = [
       { variant: 'primary', text: 'Book a demo', href: '/contact' },
       { text: 'How it works', href: '#how-it-works' },
     ]}
+    screenshots={{
+      desktop: {
+        src: heroTeeSheet,
+        alt: "Staff tee sheet for Wednesday Twilight Men's, 65 of 72 slots booked",
+      },
+      phone: {
+        src: heroPhone,
+        alt: 'The same 4:40 PM tee time on a golfer’s phone, with cancellation closed',
+      },
+    }}
   >
     <Fragment slot="title">The easiest way to run your golf leagues</Fragment>
     <Fragment slot="subtitle">
@@ -104,22 +121,28 @@ const structuredData = [
       {
         title: 'Tee times open two weeks out',
         description: 'Each league date publishes on schedule. Golfers get a link by text.',
-        screenshot: 'Text message with the booking link',
+        screenshot: { src: stepText, alt: 'Text messages from the course with an invite link and a tee time reminder' },
       },
       {
         title: 'Golfers book their own slots',
         description: 'They pick an open time and book it. Staff can book for anyone who calls in.',
-        screenshot: 'Golfer booking a slot on a phone',
+        screenshot: { src: stepBook, alt: 'Golfer picking an open 7:40 AM tee time with a Book button' },
       },
       {
         title: 'The sheet locks before play',
         description: 'The cancellation deadline keeps the tee sheet stable in the final days.',
-        screenshot: 'Locked tee sheet, staff view',
+        screenshot: {
+          src: stepLocked,
+          alt: 'Golfer tee sheet showing the deadline has passed, with the pro shop number to call',
+        },
       },
       {
         title: 'Play, then post scores',
         description: 'Scores and attendance go on record for the season.',
-        screenshot: 'Score and attendance entry',
+        screenshot: {
+          src: stepScores,
+          alt: 'Leaderboard of scores, averages and handicaps for Monday Afternoon Ladies',
+        },
       },
     ]}
   />
