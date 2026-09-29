@@ -1,6 +1,6 @@
 ---
 import Headline from '~/components/ui/Headline.astro';
-import ScreenshotSlot from '~/components/ui/ScreenshotSlot.astro';
+import Image from '~/components/common/Image.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { StepsSticky as Props } from '~/types';
 
@@ -36,30 +36,45 @@ const {
           <li
             data-step
             {...(i === 0 ? { 'data-active': '' } : {})}
-            class="group border-l-[3px] border-border py-6 pl-5 data-[active]:border-primary motion-safe:transition-colors"
+            class="group border-l-[3px] border-border py-6 pl-5 data-[active]:border-primary motion-safe:transition-colors md:flex md:min-h-[calc(100vh-76px)] md:flex-col md:justify-center"
           >
-            <h3 class="font-heading text-xl font-semibold text-heading group-data-[active]:text-primary">
-              {item.title}
-            </h3>
-            <p class="mt-2 leading-relaxed text-muted">{item.description}</p>
-            <ScreenshotSlot label={item.screenshot} class="mt-5 aspect-[4/3] md:hidden" />
+            <div data-step-text>
+              <h3 class="font-heading text-xl font-semibold text-heading group-data-[active]:text-primary">
+                {item.title}
+              </h3>
+              <p class="mt-2 leading-relaxed text-muted">{item.description}</p>
+            </div>
+            <Image
+              src={item.screenshot.src}
+              alt={item.screenshot.alt}
+              layout="full-width"
+              class="mt-5 rounded-xl border border-border md:hidden"
+            />
           </li>
         ))
       }
     </ol>
     <div class="hidden md:block md:col-span-7">
-      <div class="sticky top-24 aspect-[4/3]">
-        {
-          items.map((item, i) => (
-            <div
-              data-shot
-              {...(i === 0 ? { 'data-active': '' } : {})}
-              class="absolute inset-0 opacity-0 data-[active]:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
-            >
-              <ScreenshotSlot label={item.screenshot} size="Real screenshot, 1600 x 1200" class="h-full" />
-            </div>
-          ))
-        }
+      <div class="sticky top-[76px] flex h-[calc(100vh-76px)] items-center">
+        <div class="relative aspect-[4/3] w-full">
+          {
+            items.map((item, i) => (
+              <div
+                data-shot
+                {...(i === 0 ? { 'data-active': '' } : {})}
+                class="absolute inset-0 opacity-0 data-[active]:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
+              >
+                <Image
+                  src={item.screenshot.src}
+                  alt={item.screenshot.alt}
+                  layout="cover"
+                  sizes="(min-width: 1152px) 40rem, 58vw"
+                  class="rounded-xl border border-border"
+                />
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   </aw-steps-sticky>
@@ -67,26 +82,38 @@ const {
 
 <script>
   class AwStepsSticky extends HTMLElement {
-    observer?: IntersectionObserver;
+    frame = 0;
+    update?: () => void;
     connectedCallback() {
       const steps = [...this.querySelectorAll<HTMLElement>('[data-step]')];
       const shots = [...this.querySelectorAll<HTMLElement>('[data-shot]')];
-      const select = (index: number) => {
+      const texts = steps.map((step) => step.querySelector<HTMLElement>('[data-step-text]')!);
+      // Each step is a viewport tall on desktop while the screenshot column
+      // stays pinned beside it. The active step is the last one whose text has
+      // reached the middle of the screen, recomputed from positions on every
+      // scroll frame, so a jump (a nav link, a fast fling) can never skip one.
+      const select = () => {
+        this.frame = 0;
+        const middle = innerHeight / 2;
+        const index = Math.max(
+          0,
+          texts.findLastIndex((text) => text.getBoundingClientRect().top <= middle)
+        );
         [steps, shots].forEach((list) => list.forEach((el, i) => el.toggleAttribute('data-active', i === index)));
       };
-      // A step becomes active when it crosses the middle band of the viewport.
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) select(steps.indexOf(entry.target as HTMLElement));
-          });
-        },
-        { rootMargin: '-45% 0px -45% 0px' }
-      );
-      steps.forEach((step) => this.observer?.observe(step));
+      this.update = () => {
+        this.frame ||= requestAnimationFrame(select);
+      };
+      addEventListener('scroll', this.update, { passive: true });
+      addEventListener('resize', this.update);
+      select();
     }
     disconnectedCallback() {
-      this.observer?.disconnect();
+      cancelAnimationFrame(this.frame);
+      if (this.update) {
+        removeEventListener('scroll', this.update);
+        removeEventListener('resize', this.update);
+      }
     }
   }
   if (!customElements.get('aw-steps-sticky')) customElements.define('aw-steps-sticky', AwStepsSticky);
