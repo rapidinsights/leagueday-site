@@ -15,9 +15,13 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+// The wrapper's fade-in waits for a quarter of the section to be on screen,
+// which a section this tall never reaches on a laptop, so it stayed invisible.
+const containerClass = `max-w-6xl mx-auto motion-safe:md:opacity-100 motion-safe:md:intersect:animate-none ${classes?.container ?? ''}`;
 ---
 
-<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+<WidgetWrapper id={id} isDark={isDark} containerClass={containerClass} bg={bg}>
   <Headline
     title={title}
     subtitle={subtitle}
